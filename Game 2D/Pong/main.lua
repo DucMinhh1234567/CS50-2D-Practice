@@ -33,7 +33,7 @@ function love.load()
         ['score'] = love.audio.newSource('sound/score.wav', 'static'),
         ['wall'] = love.audio.newSource('sound/wall2.wav', 'static')
     }
-    
+
     -- Setup Screen with virtual size to give the vibe of retro game
     love.window.setMode(WINDOW_WIDTH, WINDOW_HEIGHT, {
         resizable = true,
@@ -98,7 +98,7 @@ function love.update(dt)
         if ball:collides(p1) then
             ball.dx = -ball.dx * 1.03
             ball.x = p1.x + 5
-            
+
             -- Randomized the angle
             if ball.dy < 0 then
                 ball.dy = -math.random(10, 150)
@@ -112,7 +112,7 @@ function love.update(dt)
         if ball:collides(p2) then
             ball.dx = -ball.dx * 1.03
             ball.x = p2.x - 4
-            
+
             -- Randomized the angle
             if ball.dy < 0 then
                 ball.dy = -math.random(10, 150)
