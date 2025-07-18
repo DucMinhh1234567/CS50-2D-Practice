@@ -34,12 +34,12 @@ function love.load()
         ['wall'] = love.audio.newSource('sound/wall2.wav', 'static')
     }
 
-    -- Setup Screen with virtual size to give the vibe of retro game
     love.window.setMode(WINDOW_WIDTH, WINDOW_HEIGHT, {
         resizable = true,
         vsync = true,
         fullscreen = false
     })
+    -- Setup Screen with virtual size to give the vibe of retro game
     push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT, {
         resizable = true,
         vsync = true,
