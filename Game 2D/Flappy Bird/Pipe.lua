@@ -5,22 +5,27 @@ Pipe = Class{}
 local PIPE_IMAGE = love.graphics.newImage('assets/sprites/pipe-green.png')
 
 -- The scroll speed should be the same as the ground
-local PIPE_SCROLL = -60
+PIPE_SPEED = 60
 
-function Pipe:init()
+PIPE_HEIGHT = PIPE_IMAGE:getHeight()
+PIPE_WIDTH = PIPE_IMAGE:getWidth()
+
+function Pipe:init(place, y)
     self.x = VIRTUAL_WIDTH
+    self.y = y
 
-    -- Random value from halfway of the screen to bottom
-    self.y = math.random((VIRTUAL_HEIGHT - ground:getHeight()) - PIPE_IMAGE:getHeight(), 
-                        VIRTUAL_HEIGHT - ground:getHeight())
+    self.width = PIPE_WIDTH
+    self.height = PIPE_HEIGHT
 
-    self.width = PIPE_IMAGE:getWidth()
+    self.place = place
 end
 
 function Pipe:update(dt)
-    self.x = self.x + PIPE_SCROLL * dt
+    
 end
 
 function Pipe:render()
-    love.graphics.draw (PIPE_IMAGE, self.x, self.y)
+    love.graphics.draw (PIPE_IMAGE, self.x,
+                        (self.place == 'top' and self.y + PIPE_HEIGHT or self.y),
+                        0, 1, self.place == 'top' and - 1 or 1)
 end

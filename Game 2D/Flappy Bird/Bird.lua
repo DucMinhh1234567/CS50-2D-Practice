@@ -10,9 +10,19 @@ function Bird:init()
 
     -- Bird position
     self.x = VIRTUAL_WIDTH / 2 - self.width / 2
-    self.y = VIRTUAL_HEIGHT / 2 - self.height / 2
+    self.y = VIRTUAL_HEIGHT / 2 - self.height / 2 + 40
 
     self.dy = 0
+end
+
+function Bird:collides(pipe)
+    -- AABB collision
+    if self.x + self.width - 2 >= pipe.x and self.x + 2 < pipe.x + pipe.width then
+        if self.y + self.height - 1 >= pipe.y and self.y + 1 < pipe.y + pipe.height then
+            return true
+        end
+    end
+    return false
 end
 
 function Bird:update(dt)

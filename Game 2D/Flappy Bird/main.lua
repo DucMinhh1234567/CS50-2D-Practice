@@ -1,8 +1,16 @@
 
 push = require 'push'
 Class = require 'class'
+
 require 'Bird'
 require 'Pipe'
+require 'PipePair'
+
+require 'StateMachine'
+require 'states/BaseState'
+require 'states/PlayState'
+require 'states/TitleScreenState'
+
 -- Window res (portrait)
 WINDOW_WIDTH = 576
 WINDOW_HEIGHT = 1024
@@ -22,11 +30,7 @@ local GROUND_SPEED = 60
 -- Background looping point
 local BACKGROUND_LOOPING_POINT = 288
 
--- Table of spawning pipes
-local pipes = {}
 
--- Timer for spawning pipes
-local spawnTimer = 0
 
 function love.load()
     love.graphics.setDefaultFilter('nearest', 'nearest')
@@ -50,8 +54,13 @@ function love.load()
         fullscreen = false
     })
 
-    -- Create bird instance
-    bird = Bird()
+    -- Initialize state machine with all state-returning functions
+    gStateMachine = StateMachine {
+        ['title'] = function() return TitleScreenState() end,
+        ['play'] = function() return PlayState() end
+    }
+
+    gStateMachine:change('title')
 
     -- initialize input table
     love.keyboard.keysPressed = {}
@@ -77,60 +86,25 @@ function love.keyboard.wasPressed(key)
 end
 
 function love.update(dt)
-    -- Update background and ground scrolling
+    -- Background và ground luôn cuộn
     backgroundScroll = (backgroundScroll + BACKGROUND_SPEED * dt) % background:getWidth()
-
-    -- Update ground scrolling
     groundScroll = (groundScroll + GROUND_SPEED * dt) % ground:getWidth()
 
-    -- Set the timer
-    spawnTimer = spawnTimer + dt
-
-    -- Spawn a new pipe every 3 seconds
-    if spawnTimer > 2.5 then
-        -- Add Pipe() to table pipes
-        table.insert(pipes, Pipe())
-        spawnTimer = 0
-    end
-
-    -- For every pipe in scene
-    -- In other word, for key 'i' and value 'pipe' in table 'pipes'
-    for i, pipe in pairs(pipes) do
-        pipe:update(dt)
-
-        -- If pipe past the left edge, remove pipe
-        -- Like destroy object in GameMaker
-        if pipe.x < 0 - pipe.width then
-            -- remove element with key i in pipes
-            table.remove(pipes, i)
-        end
-    end
-
-    bird:update(dt)
-
-    -- Put this table here so that it can be reset every frame
-    -- to make the key only pressed on that frame not hold
+    gStateMachine:update(dt)
     love.keyboard.keysPressed = {}
 end
 
 function love.draw()
     push:start()
-
-    -- Draw background to fit the entire virtual screen and scroll
+    -- Vẽ background phủ toàn bộ màn hình ảo và cuộn
     love.graphics.draw(background, -backgroundScroll, 0)
     love.graphics.draw(background, -backgroundScroll + background:getWidth(), 0)
 
-    -- Draw the pipes in scene
-    -- Put this above the ground so the pipes don't appear above the ground
-    for i, pipe in pairs(pipes) do
-        pipe:render()
-    end
+    -- Vẽ state hiện tại (menu, play, v.v.)
+    gStateMachine:render()
 
-    -- Draw ground at the bottom, covering the entire width and scroll
+    -- Vẽ ground ở dưới cùng, phủ toàn bộ chiều ngang và cuộn
     love.graphics.draw(ground, -groundScroll, VIRTUAL_HEIGHT - ground:getHeight())
     love.graphics.draw(ground, -groundScroll + ground:getWidth(), VIRTUAL_HEIGHT - ground:getHeight())
-
-    -- Draw the bird
-    bird:render()
     push:finish()
 end
