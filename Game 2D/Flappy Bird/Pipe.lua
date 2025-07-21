@@ -5,7 +5,7 @@ Pipe = Class{}
 local PIPE_IMAGE = love.graphics.newImage('assets/sprites/pipe-green.png')
 
 -- The scroll speed should be the same as the ground
-PIPE_SPEED = 60
+PIPE_SPEED = 120
 
 PIPE_HEIGHT = PIPE_IMAGE:getHeight()
 PIPE_WIDTH = PIPE_IMAGE:getWidth()

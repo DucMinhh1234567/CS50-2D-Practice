@@ -9,8 +9,8 @@ function Bird:init()
     self.height = self.image:getHeight()
 
     -- Bird position
-    self.x = VIRTUAL_WIDTH / 2 - self.width / 2
-    self.y = VIRTUAL_HEIGHT / 2 - self.height / 2 + 40
+    self.x = VIRTUAL_WIDTH / 2 - self.width / 2 - 60
+    self.y = VIRTUAL_HEIGHT / 2 - self.height / 2 + 5
 
     self.dy = 0
 end
@@ -36,6 +36,7 @@ function Bird:update(dt)
        love.keyboard.wasPressed('return') or
        love.keyboard.wasPressed('up') then
         self.dy = -300
+        gSounds['wing']:play()
     end
 
     -- Apply current velocity to Y position

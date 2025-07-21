@@ -16,6 +16,9 @@ function PipePair:init(y)
     -- Param to decide if this pair is ready to be remove
     -- Don't really need to do removal this way
     self.remove = false
+
+    -- Prevent from scoring too much from just 1 pair of pipes
+    self.scored = false
 end
 
 function PipePair:update(dt)

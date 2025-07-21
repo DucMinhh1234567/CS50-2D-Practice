@@ -9,7 +9,9 @@ require 'PipePair'
 require 'StateMachine'
 require 'states/BaseState'
 require 'states/PlayState'
+require 'states/ScoreState'
 require 'states/TitleScreenState'
+require 'states/CountDownState'
 
 -- Window res (portrait)
 WINDOW_WIDTH = 576
@@ -25,11 +27,10 @@ local groundScroll = 0
 
 -- Background and ground scrolling speed
 local BACKGROUND_SPEED = 20
-local GROUND_SPEED = 60
+local GROUND_SPEED = 120
 
 -- Background looping point
 local BACKGROUND_LOOPING_POINT = 288
-
 
 
 function love.load()
@@ -54,10 +55,22 @@ function love.load()
         fullscreen = false
     })
 
+    gSounds = {
+        ['wing'] = love.audio.newSource('assets/sounds/wing.wav', 'static'),
+        ['point'] = love.audio.newSource('assets/sounds/point.wav', 'static'),
+        ['hit'] = love.audio.newSource('assets/sounds/hit.wav', 'static'),
+        ['music'] = love.audio.newSource('assets/sounds/marios_way.mp3', 'static')
+    }
+
+    gSounds['music']:setLooping(true)
+    gSounds['music']:play()
+
     -- Initialize state machine with all state-returning functions
     gStateMachine = StateMachine {
         ['title'] = function() return TitleScreenState() end,
-        ['play'] = function() return PlayState() end
+        ['play'] = function() return PlayState() end,
+        ['score'] = function() return ScoreState() end,
+        ['countdown'] = function() return CountDownState() end
     }
 
     gStateMachine:change('title')

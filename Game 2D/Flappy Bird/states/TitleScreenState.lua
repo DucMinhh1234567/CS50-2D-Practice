@@ -5,13 +5,13 @@ local TITLE_IMAGE = love.graphics.newImage('assets/sprites/message.png')
 function TitleScreenState:init()
     self.bird = Bird()
     -- Đặt chim ở giữa màn hình
-    self.bird.x = VIRTUAL_WIDTH / 2 - self.bird.width / 2
-    self.bird.y = VIRTUAL_HEIGHT / 2 - self.bird.height / 2 + 40
+    self.bird.x = VIRTUAL_WIDTH / 2 - self.bird.width / 2 - 60
+    self.bird.y = VIRTUAL_HEIGHT / 2 - self.bird.height / 2 + 5
 end
 
 function TitleScreenState:update(dt)
     if love.keyboard.wasPressed('enter') or love.keyboard.wasPressed('return') or love.keyboard.wasPressed('space') then
-        gStateMachine:change('play')
+        gStateMachine:change('countdown')
     end
 end
 
