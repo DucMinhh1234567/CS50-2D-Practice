@@ -7,11 +7,11 @@ require 'Pipe'
 require 'PipePair'
 
 require 'StateMachine'
-require 'states/BaseState'
-require 'states/PlayState'
-require 'states/ScoreState'
-require 'states/TitleScreenState'
-require 'states/CountDownState'
+require 'states.BaseState'
+require 'states.PlayState'
+require 'states.ScoreState'
+require 'states.TitleScreenState'
+require 'states.CountDownState'
 
 -- Window res (portrait)
 WINDOW_WIDTH = 576
