@@ -68,7 +68,7 @@ end
 function Bird:render()
     -- Tính góc xoay dựa vào vận tốc dy
     -- self.dy < 0: chim bay lên, góc âm; self.dy > 0: chim rơi xuống, góc dương
-    local rotation = math.min(math.max(self.dy * 0.0015, -math.pi/6), math.pi/4)
+    local rotation = math.min(math.max(self.dy * 0.002, -math.pi/6), math.pi/4)
 
     -- Lấy sprite hiện tại theo frame (1: upflap, 2: midflap, 3: downflap)
     local image = self.frames[self.frame]
