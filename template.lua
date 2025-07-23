@@ -1,6 +1,9 @@
 WINDOW_WIDTH = 1280
 WINDOW_HEIGHT = 720
 
+VIRTUAL_WIDTH = 432
+VIRTUAL_HEIGHT = 243
+
 function love.load()
     love.window.setMode(WINDOW_WIDTH, WINDOW_HEIGHT, {
         resizable = true,
@@ -29,6 +32,6 @@ end
 
 function love.draw()
     push:start()
-    love.graphics.print("Hello lua!", WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2)
+    love.graphics.print("Hello lua!", VIRTUAL_WIDTH / 2, VIRTUAL_HEIGHT / 2)
     push:finish()
 end
